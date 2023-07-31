@@ -1,0 +1,37 @@
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <!-- NEC Changes - Start -->
+      <img class="navbar-item" src="{{{uiRootPath}}}/img/NEC.svg" width="30" height="30">
+      <a class="navbar-item" href="{{{or site.url  siteRootPath}}}">{{site.title}}</a>
+      <!-- NEC Changes - End -->
+      {{!-- {{#if env.SITE_SEARCH_ENABLED}} --}}
+      <div class="navbar-item search hide-for-print">
+        <div id="search-field" class="field">
+          <input id="search-input" type="text" placeholder="Search the docs" {{#if page.home}} autofocus{{/if}}>
+        </div>
+      </div>
+      {{!-- {{/if}} --}}
+
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <!-- NEC Changes - Start -->
+        <a class="navbar-item" href="https://www.nec.com" target="_blank" rel="noreferrer nopener">NEC</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Resources</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="https://nec.com" target="_blank" rel="noreferrer nopener">NEC Corporation</a>
+            <a class="navbar-item" href="https://necam.com" target="_blank" rel="noreferrer nopener">NECAM</a>
+          </div>
+        </div>
+        <!-- NEC Changes - End -->
+      </div>
+    </div>
+  </nav>
+</header>

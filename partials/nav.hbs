@@ -1,0 +1,11 @@
+<div class="nav-container" {{#if page.component}} data-component="{{page.component.name}}"
+  data-version="{{page.version}}" {{/if}}>
+  <aside class="nav">
+    <div class="panels">
+      <!-- NEC Changes - Start -->
+      {{> nav-explore}}
+      {{> nav-menu}}
+      <!-- NEC Changes - End -->
+    </div>
+  </aside>
+</div>
