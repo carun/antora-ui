@@ -1,14 +1,14 @@
 @font-face {
-    font-family: Noto Sans;
+    font-family: RobotoCondensed;
     font-style: normal;
     font-weight: 400;
-    src: local("Noto Sans"), local("Noto Sans-Regular"), url(../font/NotoSans-Regular.ttf) format("truetype")
+    src: local("RobotoCondensed"), local("RobotoCondensed-Regular"), url(../font/RobotoCondensed-Regular.ttf) format("truetype")
 }
 
 @font-face {
     font-weight: 700;
-    font-family: Noto Sans;
-    src: local("NotoSans-Bold"), url(../font/NotoSans-Bold.ttf) format("truetype")
+    font-family: RobotoCondensed;
+    src: local("RobotoCondensed-Bold"), url(../font/RobotoCondensed-Bold.ttf) format("truetype")
 }
 
 @font-face {
@@ -138,7 +138,7 @@ html {
 body {
     background: #fff;
     color: #222;
-    font-family: Noto Sans, sans-serif;
+    font-family: RobotoCondensed;
     line-height: 1.15;
     margin: 0;
     word-wrap: anywhere
@@ -1619,7 +1619,7 @@ a+.breadcrumbs {
     top: .25rem;
     right: .5rem;
     color: grey;
-    font-family: Noto Sans, sans-serif;
+    font-family: RobotoCondensed, sans-serif;
     font-size: .75rem;
     line-height: 1
 }
@@ -1777,7 +1777,7 @@ a+.breadcrumbs {
     border: 1px solid;
     border-radius: 100%;
     display: inline-block;
-    font-family: Noto Sans, sans-serif;
+    font-family: RobotoCondensed;
     font-size: .75rem;
     font-style: normal;
     line-height: 1.2;
