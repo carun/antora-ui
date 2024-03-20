@@ -12,14 +12,14 @@
 }
 
 @font-face {
-    font-family: Inconsolata;
-    src: url(../font/Inconsolata-Regular.ttf)
+    font-family: 'Iosevka Fixed Web';
+    src: url(../font/IosevkaFixed-Regular.woff2) format("woff")
 }
 
 @font-face {
     font-weight: 700;
-    font-family: Inconsolata;
-    src: url(../font/Inconsolata-Bold.ttf)
+    font-family: 'Iosevka Fixed Web';
+    src: url(../font/IosevkaFixed-Bold.woff2) format("woff")
 }
 
 .perma-link-copy {
@@ -159,7 +159,7 @@ a:active {
 code,
 kbd,
 pre {
-    font-family: Inconsolata, monospace
+    font-family: 'Iosevka Fixed Web', monospace
 }
 
 b,
