@@ -5,3 +5,194 @@
 !function(){"use strict";var t=document.querySelector(".navbar-burger");t&&t.addEventListener("click",function(t){t.stopPropagation(),document.documentElement.classList.toggle("is-clipped--navbar"),this.classList.toggle("is-active");t=document.getElementById(this.dataset.target);{var e;t.classList.toggle("is-active")&&(t.style.maxHeight="",e=window.innerHeight-Math.round(t.getBoundingClientRect().top),parseInt(window.getComputedStyle(t).maxHeight,10)!==e&&(t.style.maxHeight=e+"px"))}}.bind(t))}();
 !function(){"use strict";var o=/^\$ (\S[^\\\n]*(\\\n(?!\$ )[^\\\n]*)*)(?=\n|$)/gm,s=/( ) *\\\n *|\\\n( ?) */g,l=/ +$/gm,d=(document.getElementById("site-script")||{dataset:{}}).dataset;[].slice.call(document.querySelectorAll(".doc pre.highlight, .doc .literalblock pre")).forEach(function(e){var t,n,c,i;if(e.classList.contains("highlight"))(a=(t=e.querySelector("code")).dataset.lang)&&"console"!==a&&((c=document.createElement("span")).className="source-lang",c.appendChild(document.createTextNode(a)));else{if(!e.innerText.startsWith("$ "))return;var a=e.parentNode.parentNode;a.classList.remove("literalblock"),a.classList.add("listingblock"),e.classList.add("highlightjs","highlight"),(t=document.createElement("code")).className="language-console hljs",t.dataset.lang="console",t.appendChild(e.firstChild),e.appendChild(t)}(a=document.createElement("div")).className="source-toolbox",c&&a.appendChild(c),window.navigator.clipboard&&((n=document.createElement("button")).className="copy-button",n.setAttribute("title","Copy to clipboard"),"svg"===d.svgAs?((c=document.createElementNS("http://www.w3.org/2000/svg","svg")).setAttribute("class","copy-icon"),(i=document.createElementNS("http://www.w3.org/2000/svg","use")).setAttribute("href",window.uiRootPath+"/img/octicons-16.svg#icon-clippy"),c.appendChild(i),n.appendChild(c)):((i=document.createElement("img")).src=window.uiRootPath+"/img/octicons-16.svg#view-clippy",i.alt="copy icon",i.className="copy-icon",n.appendChild(i)),(c=document.createElement("span")).className="copy-toast",c.appendChild(document.createTextNode("Copied!")),n.appendChild(c),a.appendChild(n)),e.appendChild(a),n&&n.addEventListener("click",function(e){var t=e.innerText.replace(l,"");"console"===e.dataset.lang&&t.startsWith("$ ")&&(t=function(e){var t,n=[];for(;t=o.exec(e);)n.push(t[1].replace(s,"$1$2"));return n.join(" && ")}(t));window.navigator.clipboard.writeText(t).then(function(){this.classList.add("clicked"),this.offsetHeight,this.classList.remove("clicked")}.bind(this),function(){})}.bind(n,t))})}();
 !function(){"use strict";var o=/ +$/gm,d=(document.getElementById("site-script")||{dataset:{}}).dataset;[].slice.call(document.querySelectorAll("span.perma-link-copy")).forEach(function(e){var t,i,n,c,a=window.location.href.replace("/latest/","/"+e.getAttribute("version")+"/");(i=document.createElement("div")).className="perma-link",window.navigator.clipboard&&((t=document.createElement("button")).className="copy-button",t.setAttribute("title","Copy Link for Version"),(n=document.createElement("span")).className="button-label",n.appendChild(document.createTextNode("Permalink")),t.appendChild(n),"svg"===d.svgAs?((n=document.createElementNS("http://www.w3.org/2000/svg","svg")).setAttribute("class","copy-icon"),(c=document.createElementNS("http://www.w3.org/2000/svg","use")).setAttribute("href",window.uiRootPath+"/img/link-24.svg#icon-clippy"),n.appendChild(c),t.appendChild(n)):((c=document.createElement("img")).src=window.uiRootPath+"/img/link-24.svg#view-clippy",c.alt="copy icon",c.className="copy-icon",t.appendChild(c)),(n=document.createElement("span")).className="copy-toast",n.appendChild(document.createTextNode("Copied!")),t.appendChild(n),i.appendChild(t)),e.appendChild(i),t&&t.addEventListener("click",function(e){e=e.replace(o,"");window.navigator.clipboard.writeText(e).then(function(){this.classList.add("clicked"),this.offsetHeight,this.classList.remove("clicked")}.bind(this),function(){})}.bind(t,a))})}();
+
+
+/*
+ * Add sidebar toggle functionality for BMS documentation
+ */
+!function() {
+    "use strict";
+
+    // Wait for the DOM to be fully loaded
+    document.addEventListener('DOMContentLoaded', function() {
+      // Find the left sidebar and right sidebar elements based on the structure in the screenshot
+      var leftSidebar = document.querySelector('.nav-menu') || document.querySelector('.nav-container');
+      var rightSidebar = document.querySelector('.toc-menu') || document.querySelector('.on-this-page');
+
+      if (!leftSidebar && !rightSidebar) return; // Exit if neither sidebar exists
+
+      // Create right toggle container
+      var rightToggleContainer = document.createElement('div');
+      rightToggleContainer.className = 'sidebar-toggles right-toggles';
+      rightToggleContainer.style.position = 'fixed';
+      rightToggleContainer.style.top = '80px';
+      rightToggleContainer.style.right = '10px';
+      rightToggleContainer.style.zIndex = '100';
+      rightToggleContainer.style.display = 'flex';
+      rightToggleContainer.style.flexDirection = 'column';
+      rightToggleContainer.style.gap = '10px';
+
+      // Create left toggle container
+      var leftToggleContainer = document.createElement('div');
+      leftToggleContainer.className = 'sidebar-toggles left-toggles';
+      leftToggleContainer.style.position = 'fixed';
+      leftToggleContainer.style.top = '80px';
+      leftToggleContainer.style.left = '10px';
+      leftToggleContainer.style.zIndex = '100';
+      leftToggleContainer.style.display = 'flex';
+      leftToggleContainer.style.flexDirection = 'column';
+      leftToggleContainer.style.gap = '10px';
+
+      // Create left sidebar toggle if it exists
+      if (leftSidebar) {
+        var leftToggle = createToggleButton('left', 'Toggle navigation sidebar');
+        leftToggleContainer.appendChild(leftToggle);
+
+        leftToggle.addEventListener('click', function() {
+          document.body.classList.toggle('left-sidebar-hidden');
+          this.classList.toggle('active');
+          saveState('left-sidebar-hidden', document.body.classList.contains('left-sidebar-hidden'));
+        });
+      }
+
+      // Create right sidebar toggle if it exists
+      if (rightSidebar) {
+        var rightToggle = createToggleButton('right', 'Toggle table of contents');
+        rightToggleContainer.appendChild(rightToggle);
+
+        rightToggle.addEventListener('click', function() {
+          document.body.classList.toggle('right-sidebar-hidden');
+          this.classList.toggle('active');
+          saveState('right-sidebar-hidden', document.body.classList.contains('right-sidebar-hidden'));
+        });
+      }
+
+      // Add the toggle containers to the document
+      if (leftSidebar) document.body.appendChild(leftToggleContainer);
+      if (rightSidebar) document.body.appendChild(rightToggleContainer);
+
+      // Add CSS for sidebars and toggle buttons
+      addStyles();
+
+      // Restore previous state
+      restoreState();
+    });
+
+    function createToggleButton(direction, title) {
+      var button = document.createElement('button');
+      button.className = 'sidebar-toggle ' + direction + '-toggle';
+      button.setAttribute('title', title);
+      button.innerHTML = '<div class="toggle-arrow"></div>';
+
+      return button;
+    }
+
+    function addStyles() {
+      var styleEl = document.createElement('style');
+      styleEl.textContent = `
+        /* Toggle button styles */
+        .sidebar-toggle {
+          width: 30px;
+          height: 30px;
+          border-radius: 50%;
+          background-color: #fff;
+          border: 1px solid #ddd;
+          box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: background-color 0.3s;
+        }
+
+        .sidebar-toggle:hover {
+          background-color: #f5f5f5;
+        }
+
+        .sidebar-toggle.active {
+          background-color: #e8e8e8;
+        }
+
+        .toggle-arrow {
+          width: 10px;
+          height: 10px;
+          border-style: solid;
+          border-width: 0 2px 2px 0;
+          display: inline-block;
+          padding: 2px;
+        }
+
+        /* Default arrow directions */
+        .left-toggle .toggle-arrow {
+          transform: rotate(-45deg);
+          margin-right: 2px;
+        }
+
+        .right-toggle .toggle-arrow {
+          transform: rotate(-45deg);
+          margin-right: 5px;
+        }
+
+        /* Active state arrow directions */
+        .left-toggle.active .toggle-arrow {
+          transform: rotate(135deg);
+          margin-right: 0;
+          margin-left: 2px;
+        }
+
+        .right-toggle.active .toggle-arrow {
+          transform: rotate(135deg);
+          margin-right: 0;
+        }
+
+        /* Hidden sidebar styles */
+        body.left-sidebar-hidden .nav-menu,
+        body.left-sidebar-hidden .nav-container {
+          display: none !important;
+        }
+
+        body.right-sidebar-hidden .toc-menu,
+        body.right-sidebar-hidden .on-this-page {
+          display: none !important;
+        }
+
+        /* Adjust main content when sidebars are hidden */
+        body.left-sidebar-hidden main,
+        body.left-sidebar-hidden .main,
+        body.left-sidebar-hidden .doc {
+          margin-left: 0 !important;
+          padding-left: 1rem !important;
+        }
+
+        body.right-sidebar-hidden main,
+        body.right-sidebar-hidden .main,
+        body.right-sidebar-hidden .doc {
+          margin-right: 0 !important;
+          padding-right: 1rem !important;
+        }
+      `;
+      document.head.appendChild(styleEl);
+    }
+
+    function saveState(key, value) {
+      if (window.localStorage) {
+        localStorage.setItem(key, value);
+      }
+    }
+
+    function restoreState() {
+      if (window.localStorage) {
+        if (localStorage.getItem('left-sidebar-hidden') === 'true') {
+          document.body.classList.add('left-sidebar-hidden');
+          var leftToggle = document.querySelector('.left-toggle');
+          if (leftToggle) leftToggle.classList.add('active');
+        }
+
+        if (localStorage.getItem('right-sidebar-hidden') === 'true') {
+          document.body.classList.add('right-sidebar-hidden');
+          var rightToggle = document.querySelector('.right-toggle');
+          if (rightToggle) rightToggle.classList.add('active');
+        }
+      }
+    }
+  }();
